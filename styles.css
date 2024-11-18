@@ -1,0 +1,10 @@
+.sci-hub-button:hover,
+.pdf-button:hover {
+    opacity: 0.9;
+}
+
+.sci-hub-button-container {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}

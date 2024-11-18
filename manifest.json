@@ -1,0 +1,47 @@
+{
+    "manifest_version": 3,
+    "name": "Scholar PDF & Sci-Hub Access",
+    "version": "1.0.0",
+    "description": "在Google Scholar搜索结果中添加PDF直接访问和Sci-Hub快捷按钮",
+    "permissions": [
+        "activeTab",
+        "clipboardWrite"
+    ],
+    "host_permissions": [
+        "https://*.sci-hub.se/*",
+        "https://*.sci-hub.st/*",
+        "https://*.sci-hub.ru/*"
+    ],
+    "action": {
+        "default_icon": {
+            "16": "icons/icon16.png",
+            "32": "icons/icon32.png",
+            "48": "icons/icon48.png",
+            "128": "icons/icon128.png"
+        }
+    },
+    "icons": {
+        "16": "icons/icon16.png",
+        "32": "icons/icon32.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://scholar.google.com/*",
+                "*://scholar.google.co.jp/*",
+                "*://scholar.google.cn/*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'; upgrade-insecure-requests"
+    }
+}

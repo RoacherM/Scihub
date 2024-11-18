@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <!-- 背景 -->
+  <circle cx="12" cy="12" r="11" fill="#4285f4"/>
+  
+  <!-- 学术帽 -->
+  <path d="M6 10l6-4 6 4-6 4z" fill="white"/>
+  <path d="M6 10v4l6 4 6-4v-4" fill="white" fill-opacity="0.7"/>
+  
+  <!-- PDF标记 -->
+  <rect x="8.5" y="9" width="7" height="3" fill="#4285f4" rx="0.5"/>
+  <text x="9.2" y="11.3" font-family="Arial Black" font-size="2.2" fill="white">PDF</text>
+  
+  <!-- 下载箭头 -->
+  <path d="M12 8v6m0 0l-2-2m2 2l2-2" stroke="#EA4335" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
