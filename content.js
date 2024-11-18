@@ -59,6 +59,41 @@ function constructSciHubUrl(result) {
 }
 
 /**
+ * Check if article is available on Sci-Hub
+ * @param {string} url - Sci-Hub URL to check
+ * @returns {Promise<boolean>} - Whether article is available
+ */
+async function checkSciHubAvailability(url) {
+    try {
+        const response = await chrome.runtime.sendMessage({
+            action: 'checkSciHubAvailability',
+            url: url
+        });
+        return response.isAvailable;
+    } catch (error) {
+        console.error('Error checking Sci-Hub availability:', error);
+        return false;
+    }
+}
+
+/**
+ * Updates button state based on availability
+ * @param {Element} button - Button element to update
+ * @param {boolean} isAvailable - Whether article is available
+ */
+function updateButtonState(button, isAvailable) {
+    if (isAvailable) {
+        button.style.backgroundColor = '#4CAF50';
+        button.innerHTML = `<span style="margin-right: 4px;">🌐</span>通过Sci-Hub访问`;
+        button.disabled = false;
+    } else {
+        button.style.backgroundColor = '#9E9E9E';
+        button.innerHTML = `<span style="margin-right: 4px;">❌</span>在Sci-Hub中未找到`;
+        button.disabled = true;
+    }
+}
+
+/**
  * Creates buttons for accessing papers
  * @param {Element} result - Result element to append button to
  * @returns {Element} - Button container
@@ -96,7 +131,6 @@ function createButtons(result) {
                 z-index: 10000;
             `;
             
-            // Add close button
             const closeButton = document.createElement('button');
             closeButton.innerHTML = '关闭预览';
             closeButton.style.cssText = `
@@ -110,7 +144,6 @@ function createButtons(result) {
                 cursor: pointer;
             `;
             
-            // Add PDF iframe
             const iframe = document.createElement('iframe');
             iframe.src = pdfLinkElement.href;
             iframe.style.cssText = `
@@ -126,7 +159,6 @@ function createButtons(result) {
             document.body.appendChild(modal);
         };
         
-        // Create direct access button
         const accessButton = document.createElement('button');
         accessButton.className = 'sci-hub-button';
         accessButton.style.backgroundColor = '#4CAF50';
@@ -143,14 +175,23 @@ function createButtons(result) {
         const scihubButton = document.createElement('button');
         scihubButton.className = 'sci-hub-button';
         scihubButton.style.backgroundColor = '#4CAF50';
-        scihubButton.innerHTML = `<span style="margin-right: 4px;">🌐</span>通过Sci-Hub访问`;
+        scihubButton.innerHTML = `<span style="margin-right: 4px;">🔍</span>检查Sci-Hub可用性...`;
+        scihubButton.disabled = true;
         
-        scihubButton.onclick = () => {
-            const sciHubUrl = constructSciHubUrl(result);
-            if (sciHubUrl) {
-                window.open(sciHubUrl, '_blank');
-            }
-        };
+        const sciHubUrl = constructSciHubUrl(result);
+        if (sciHubUrl) {
+            // Check availability and update button
+            checkSciHubAvailability(sciHubUrl).then(isAvailable => {
+                updateButtonState(scihubButton, isAvailable);
+                if (isAvailable) {
+                    scihubButton.onclick = () => {
+                        window.open(sciHubUrl, '_blank');
+                    };
+                }
+            });
+        } else {
+            updateButtonState(scihubButton, false);
+        }
         
         buttonContainer.appendChild(scihubButton);
     }
@@ -158,7 +199,7 @@ function createButtons(result) {
     return buttonContainer;
 }
 
-// Add some basic styles
+// Add styles
 const styles = document.createElement('style');
 styles.textContent = `
     .sci-hub-button {
@@ -170,11 +211,16 @@ styles.textContent = `
         font-size: 14px;
         display: inline-flex;
         align-items: center;
-        transition: opacity 0.2s;
+        transition: all 0.2s;
     }
     
-    .sci-hub-button:hover {
+    .sci-hub-button:hover:not(:disabled) {
         opacity: 0.9;
+    }
+    
+    .sci-hub-button:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
     }
 `;
 document.head.appendChild(styles);

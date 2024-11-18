@@ -1,3 +1,9 @@
+<!--
+ * @Author: ByronVon
+ * @Date: 2024-11-18 10:31:10
+ * @FilePath: /Sci-Hub Extensions/README.md
+ * @Description: 
+-->
 # Google Scholar 增强插件
 
 一个简单但功能强大的浏览器插件，用于增强 Google Scholar 的论文访问体验。
@@ -12,7 +18,7 @@
   - 显示"下载 PDF"按钮 - 直接下载论文
 
 - 当论文需要通过 Sci-Hub 访问时：
-  - 显示"通过 Sci-Hub 访问"按钮 - 智能跳转到 Sci-Hub
+  - 显示"通过 Sci-Hub 访问"按钮 - 智能跳转到 Sci-Hub（只显示可以在Sci-Hub中可以找到的论文）
 
 ### 2. 智能 Sci-Hub 链接生成
 按照以下优先级自动选择最佳的访问方式：
@@ -66,6 +72,9 @@
 - ✨ 内置 PDF 预览器
 - 🎨 简洁的用户界面
 - 📦 轻量级实现，无需外部依赖
+
+### v1.0.1 (2024-11-18)
+- ✨ 优化跳转提示，只有在Sci-Hub中可以找到的论文才可以跳转
 
 ## 注意事项
 
