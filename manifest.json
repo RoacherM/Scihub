@@ -5,12 +5,16 @@
     "description": "在Google Scholar搜索结果中添加PDF直接访问和Sci-Hub快捷按钮",
     "permissions": [
         "activeTab",
-        "clipboardWrite"
+        "clipboardWrite",
+        "scripting"
     ],
     "host_permissions": [
         "https://*.sci-hub.se/*",
         "https://*.sci-hub.st/*",
-        "https://*.sci-hub.ru/*"
+        "https://*.sci-hub.ru/*",
+        "https://scholar.google.com/*",
+        "https://scholar.google.co.jp/*",
+        "https://scholar.google.cn/*"
     ],
     "action": {
         "default_icon": {
@@ -39,7 +43,8 @@
         }
     ],
     "background": {
-        "service_worker": "background.js"
+        "service_worker": "background.js",
+        "type": "module"
     },
     "content_security_policy": {
         "extension_pages": "script-src 'self'; object-src 'self'; upgrade-insecure-requests"
