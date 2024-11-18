@@ -12,9 +12,10 @@
         "https://*.sci-hub.se/*",
         "https://*.sci-hub.st/*",
         "https://*.sci-hub.ru/*",
+        "https://*.library.lol/*",
         "https://scholar.google.com/*",
         "https://scholar.google.co.jp/*",
-        "https://scholar.google.cn/*"
+        "https://scholar.google.com.hk/*"
     ],
     "action": {
         "default_icon": {
